@@ -1,0 +1,40 @@
+# Publishes the packages to nuget.org when a version tag (v0.1.0, v0.2.0-preview.1, ...) is pushed.
+# Nothing is published on ordinary pushes. Requires the NUGET_API_KEY repository secret; see RELEASING.md.
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment: nuget
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+      - name: Check the tag matches the package version
+        run: |
+          tag="${GITHUB_REF_NAME#v}"
+          for proj in src/*/*.csproj; do
+            version=$(sed -n 's|.*<Version>\(.*\)</Version>.*|\1|p' "$proj")
+            if [ "$version" != "$tag" ]; then
+              echo "::error::$proj has version $version but the tag is v$tag"; exit 1
+            fi
+          done
+      - run: dotnet restore
+      - run: dotnet build --no-restore -c Release
+      - run: dotnet test --no-build -c Release
+      - run: dotnet pack --no-build -c Release -o artifacts
+      - name: Push to nuget.org
+        run: dotnet nuget push 'artifacts/*.nupkg' --api-key "$NUGET_API_KEY" --source https://api.nuget.org/v3/index.json --skip-duplicate
+        env:
+          NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: packages
+          path: artifacts/*

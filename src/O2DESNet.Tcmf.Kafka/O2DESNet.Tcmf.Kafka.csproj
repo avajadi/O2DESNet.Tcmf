@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <LangVersion>9.0</LangVersion>
+    <Version>0.1.0-preview.1</Version>
+    <Description>Kafka sink for O2DESNet.Tcmf: publishes TCMF messages to a Kafka topic with SASL/PLAIN, SASL/SCRAM, SASL/OAUTHBEARER (OIDC) or mutual TLS authentication.</Description>
+    <PackageTags>O2DESNet;TCMF;Kafka;Discrete-Event Simulation;Digital Twin;Transport</PackageTags>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Confluent.Kafka" Version="2.16.0" />
+    <ProjectReference Include="..\O2DESNet.Tcmf\O2DESNet.Tcmf.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <LangVersion>9.0</LangVersion>
+    <Version>0.1.0-preview.1</Version>
+    <Description>REST sink for O2DESNet.Tcmf: posts TCMF messages to an HTTP endpoint with retries, batching and OAuth2 client-credentials authentication.</Description>
+    <PackageTags>O2DESNet;TCMF;REST;HTTP;OAuth2;Discrete-Event Simulation;Digital Twin;Transport</PackageTags>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\O2DESNet.Tcmf\O2DESNet.Tcmf.csproj" />
+  </ItemGroup>
+
+</Project>
