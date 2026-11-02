@@ -21,7 +21,7 @@ Until it is published, add a project reference to `src/O2DESNet.Tcmf/O2DESNet.Tc
 
 - `TcmfMessage` and the six payload types (`LocationState`, `ServiceState`, `AdministrativeState`,
   `CarrierState`, `AttributeState`, `MessageOperation`), with `ToJson()`, `FromJson()` and schema `Validate()`.
-- `TcmfUrn` builds the `tcmf:<category>:...` identifiers; `GroupingType` restricts groupings to the types
+- `TcmfIdentifier` builds the `tcmf:<category>:...` identifiers; `GroupingType` restricts groupings to the types
   the schema allows.
 - `TcmfReporter` is attached to any sandbox and publishes `Arrived`, `Departed`, `ServiceCommenced`,
   `BoundTo`, `SetAttribute`, `Invalidate`, ... at the current clock time. `AnchorClock` maps the simulation
@@ -39,17 +39,17 @@ using O2DESNet.Standard;
 using O2DESNet.Tcmf;
 
 var sink = new TcmfJsonLinesSink("terminal.jsonl");
-var reporter = new TcmfReporter(sim, sink, TcmfUrn.User("RISE", "o2des_sim"),
+var reporter = new TcmfReporter(sim, sink, TcmfIdentifier.User("RISE", "o2des_sim"),
     TcmfReporter.AnchorClock(new DateTime(2026, 1, 1, 6, 0, 0, DateTimeKind.Utc)));
 
-crane.ReportTcmf(reporter, TcmfUrn.Service("loading", "container", "crane"), TcmfUrn.Location("terminal", "SEGOT"));
+crane.ReportTcmf(reporter, TcmfIdentifier.Service("loading", "container", "crane"), TcmfIdentifier.Location("terminal", "SEGOT"));
 crane.OnReadyToDepart += truck => reporter.Departed(
-    TcmfStandardExtensions.ReferenceObjectOf(truck), TcmfUrn.Location("terminal", "SEGOT"),
+    TcmfStandardExtensions.ReferenceObjectOf(truck), TcmfIdentifier.Location("terminal", "SEGOT"),
     TcmfStandardExtensions.GroupingOf(truck));
 
 gateQueue.RqstEnqueue(new TcmfLoad(
-    TcmfUrn.ReferenceObject("truck", "registration_plate", "ABC123"),
-    TcmfUrn.Grouping(GroupingType.Truck, "registration_plate", "ABC123")));
+    TcmfIdentifier.ReferenceObject("truck", "registration_plate", "ABC123"),
+    TcmfIdentifier.Grouping(GroupingType.Truck, "registration_plate", "ABC123")));
 ```
 
 Each message produced looks like this:

@@ -8,10 +8,10 @@ namespace O2DESNet.Tcmf
     /// <summary>
     /// Builders for the colon-separated "tcmf:&lt;category&gt;:&lt;part&gt;:&lt;part&gt;..." identifiers used
     /// throughout the Transport Collaboration Messaging Format, e.g.
-    /// <c>TcmfUrn.Location("port", "SEGOT", 71, "a")</c> gives <c>tcmf:location:port:SEGOT:71:a</c>.
+    /// <c>TcmfIdentifier.Location("port", "SEGOT", 71, "a")</c> gives <c>tcmf:location:port:SEGOT:71:a</c>.
     /// Numbers are formatted with the invariant culture and whitespace inside a part becomes '_'.
     /// </summary>
-    public static class TcmfUrn
+    public static class TcmfIdentifier
     {
         public const string Prefix = "tcmf";
 

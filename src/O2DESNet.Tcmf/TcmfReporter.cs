@@ -37,7 +37,7 @@ namespace O2DESNet.Tcmf
             Sink = sink ?? throw new ArgumentNullException(nameof(sink));
             ReportedBy = reportedBy;
             TimeMap = timeMap ?? (t => t);
-            MessageIdFactory = TcmfUrn.NewMessageId;
+            MessageIdFactory = TcmfIdentifier.NewMessageId;
         }
 
         public TcmfReporter(ISandbox sandbox, Action<TcmfMessage> sink, string reportedBy, Func<DateTime, DateTime> timeMap = null)
@@ -66,7 +66,7 @@ namespace O2DESNet.Tcmf
                 rs.NextBytes(bytes);
                 bytes[7] = (byte)((bytes[7] & 0x0F) | 0x40); // version 4
                 bytes[8] = (byte)((bytes[8] & 0x3F) | 0x80); // RFC 4122 variant
-                return TcmfUrn.Message(new Guid(bytes));
+                return TcmfIdentifier.Message(new Guid(bytes));
             };
         }
 

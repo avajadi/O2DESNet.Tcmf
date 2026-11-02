@@ -15,9 +15,9 @@ namespace O2DESNet.Tcmf.Demos
         #region Static Properties
         public double HourlyArrivalRate { get; private set; }
         public double HourlyLoadingRate { get; private set; }
-        public string Terminal { get; private set; } = TcmfUrn.Location("terminal", "SEGOT", "Skandiahamnen");
-        public string Gate { get; private set; } = TcmfUrn.Location("terminal", "SEGOT", "Skandiahamnen", "gate_1");
-        public string LoadingService { get; private set; } = TcmfUrn.Service("loading", "container", "crane");
+        public string Terminal { get; private set; } = TcmfIdentifier.Location("terminal", "SEGOT", "Skandiahamnen");
+        public string Gate { get; private set; } = TcmfIdentifier.Location("terminal", "SEGOT", "Skandiahamnen", "gate_1");
+        public string LoadingService { get; private set; } = TcmfIdentifier.Service("loading", "container", "crane");
         #endregion
 
         #region Dynamic Properties
@@ -36,8 +36,8 @@ namespace O2DESNet.Tcmf.Demos
         {
             var plate = string.Format("ABC{0:000}", Generator.Count);
             var truck = new TcmfLoad(
-                TcmfUrn.ReferenceObject("truck", "registration_plate", plate),
-                TcmfUrn.Grouping(GroupingType.Truck, "registration_plate", plate));
+                TcmfIdentifier.ReferenceObject("truck", "registration_plate", plate),
+                TcmfIdentifier.Grouping(GroupingType.Truck, "registration_plate", plate));
             GateQueue.RqstEnqueue(truck);
         }
 
@@ -62,7 +62,7 @@ namespace O2DESNet.Tcmf.Demos
             HourlyArrivalRate = arrRate;
             HourlyLoadingRate = loadRate;
 
-            Reporter = new TcmfReporter(this, sink, TcmfUrn.User("RISE", "o2des_sim"),
+            Reporter = new TcmfReporter(this, sink, TcmfIdentifier.User("RISE", "o2des_sim"),
                 TcmfReporter.AnchorClock(calendarStart ?? new DateTime(2026, 1, 1, 6, 0, 0, DateTimeKind.Utc)))
             {
                 MessageIdFactory = TcmfReporter.SeededMessageIds(seed),

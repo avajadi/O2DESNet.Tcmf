@@ -14,17 +14,17 @@ namespace O2DESNet.Tcmf.Tests
         private static readonly string[] TruckGrouping = { "tcmf:grouping:truck:registration_plate:ABC123" };
 
         [Test]
-        public void Urn_Builders_Format_Parts()
+        public void Identifier_Builders_Format_Parts()
         {
-            Assert.AreEqual("tcmf:location:port:SEGOT:71:a", TcmfUrn.Location("port", "SEGOT", 71, "a"));
-            Assert.AreEqual("tcmf:location:station:Malmö_Freight_Yard", TcmfUrn.Location("station", " Malmö  Freight Yard "));
-            Assert.AreEqual("tcmf:attribute:length:21.5:meters", TcmfUrn.Attribute("length", 21.5, "meters"));
-            Assert.AreEqual("tcmf:grouping:cargo_carrier:container_number:MSKU123", TcmfUrn.Grouping(GroupingType.CargoCarrier, "container_number", "MSKU123"));
-            Assert.AreEqual("tcmf:user:RISE", TcmfUrn.User("RISE"));
-            Assert.AreEqual("tcmf:user:RISE:eddie", TcmfUrn.User("RISE", "eddie"));
-            Assert.IsTrue(TcmfPatterns.MessageId.IsMatch(TcmfUrn.NewMessageId()));
-            Assert.Throws<ArgumentException>(() => TcmfUrn.Location("port", ""));
-            Assert.Throws<ArgumentNullException>(() => TcmfUrn.Location("port", null));
+            Assert.AreEqual("tcmf:location:port:SEGOT:71:a", TcmfIdentifier.Location("port", "SEGOT", 71, "a"));
+            Assert.AreEqual("tcmf:location:station:Malmö_Freight_Yard", TcmfIdentifier.Location("station", " Malmö  Freight Yard "));
+            Assert.AreEqual("tcmf:attribute:length:21.5:meters", TcmfIdentifier.Attribute("length", 21.5, "meters"));
+            Assert.AreEqual("tcmf:grouping:cargo_carrier:container_number:MSKU123", TcmfIdentifier.Grouping(GroupingType.CargoCarrier, "container_number", "MSKU123"));
+            Assert.AreEqual("tcmf:user:RISE", TcmfIdentifier.User("RISE"));
+            Assert.AreEqual("tcmf:user:RISE:eddie", TcmfIdentifier.User("RISE", "eddie"));
+            Assert.IsTrue(TcmfPatterns.MessageId.IsMatch(TcmfIdentifier.NewMessageId()));
+            Assert.Throws<ArgumentException>(() => TcmfIdentifier.Location("port", ""));
+            Assert.Throws<ArgumentNullException>(() => TcmfIdentifier.Location("port", null));
         }
 
         [Test]
@@ -93,11 +93,11 @@ namespace O2DESNet.Tcmf.Tests
                     ReferenceObject = "tcmf:reference_object:cargo_carrier:container_number:MSKU123", Carrier = "tcmf:carrier:truck:plate:ABC123" },
                 new AttributeState { Time = time, TimeType = TimeType.Planned, TimeSequence = AttributeSequence.Set,
                     ReferenceObject = "tcmf:reference_object:train:train_id:1234", Attribute = "tcmf:attribute:train_length:100:meters" },
-                new MessageOperation { MessageId = TcmfUrn.NewMessageId(), Operation = MessageOperationType.Invalidate },
+                new MessageOperation { MessageId = TcmfIdentifier.NewMessageId(), Operation = MessageOperationType.Invalidate },
             };
             foreach (var payload in payloads)
             {
-                var message = new TcmfMessage { MessageId = TcmfUrn.NewMessageId(), ReportedAt = time,
+                var message = new TcmfMessage { MessageId = TcmfIdentifier.NewMessageId(), ReportedAt = time,
                     ReportedBy = "tcmf:user:RISE", Grouping = { TruckGrouping[0] }, Payload = payload };
                 Assert.IsTrue(message.IsValid, payload.TypeName + ": " + string.Join("; ", message.Validate()));
 

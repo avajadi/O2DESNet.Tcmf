@@ -11,7 +11,7 @@ namespace O2DESNet.Tcmf
     {
         /// <summary>"tcmf:reference_object:..."</summary>
         string ReferenceObject { get; }
-        /// <summary>"tcmf:grouping:..." entries, see <see cref="TcmfUrn.Grouping"/>.</summary>
+        /// <summary>"tcmf:grouping:..." entries, see <see cref="TcmfIdentifier.Grouping"/>.</summary>
         IReadOnlyList<string> Grouping { get; }
     }
 
