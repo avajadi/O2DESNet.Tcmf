@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <LangVersion>9.0</LangVersion>
+    <Version>0.1.0</Version>
+    <Authors>RISE Research Institutes of Sweden</Authors>
+    <Description>Generate Transport Collaboration Messaging Format (TCMF 0.0.7) messages from O2DESNet discrete-event simulations.</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/avajadi/O2DESNet.Tcmf</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>O2DESNet;TCMF;Discrete-Event Simulation;Digital Twin;Transport</PackageTags>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="O2DESNet" Version="3.7.2" />
+    <PackageReference Include="System.Text.Json" Version="8.0.5" />
+  </ItemGroup>
+
+</Project>
